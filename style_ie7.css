@@ -1,0 +1,50 @@
+hr {
+color: #000;
+}
+
+hr#endfirst {
+margin-top: -1.2em;
+}
+
+hr#laststroke {
+margin-top: -0.5em;
+}
+
+.blogtoy .space1,
+.blogtoy .space2 {
+height: 3px;
+}
+
+.blogtoy ul li {
+background-position: 2px 0.5em;
+}
+
+div#head p {
+line-height: 1.1em;
+}
+
+ul#paging li {
+float: left;
+}
+
+ol.comments li {
+height: 1%;
+}
+
+label {
+position: relative;
+top: -0.3em;
+}
+
+.article ul li {
+left: -11px;
+}
+
+.date_day {
+letter-spacing: -0.4em;
+}
+
+.blogtoy h2.widgetheader {
+width: 32.5em;
+}
+

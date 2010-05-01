@@ -1,0 +1,45 @@
+.article p,
+.comments p,
+.article li,
+blockquote, code {
+line-height: 1.6em;
+}
+
+.blogtoy h2 {
+cursor: hand;
+}
+
+.blogtoy li {
+height: 1%;
+margin-left: 2px;
+}
+
+.blogtoy .space1,
+.blogtoy .space2 {
+overflow: hidden;
+}
+
+.date {
+top: 0.9em;
+}
+
+.date_month {
+margin: -0.2em 0 -0.1em 0;
+}
+
+#yourcomment label {
+top: -0.9em;
+}
+
+#yourcomment input.text {
+width: 18em;
+}
+
+.article img {
+float: left;
+margin: 10px 0;
+}
+
+body {
+font-size: 87.5%; 
+}

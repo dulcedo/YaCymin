@@ -1,0 +1,43 @@
+body {
+width: 12cm;
+margin: 0 auto;
+font: normal 10pt/1.3em corbel, "Lucida Grande", arial, sans-serif;
+color: #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+font-family: georgia, times, "Times New Roman", serif;
+color: #090;
+line-height: 1.2em;
+font-weight: normal;
+}
+
+blockquote {
+font-style: italic;
+margin-left: 2em;
+}
+
+a:link, a:visited, a:focus, a:hover, a:active {
+color: #090;
+text-decoration: none;
+}
+
+hr {
+border: none;
+border-top: 0.5mm solid #000;
+}
+
+.blogtoy, #searchform, .gravatar, #navi-main, #werbung, .date, object, embed, object *, .screenreader, #cpreview, #paging, param {
+display: none;
+}
+
+.comments {
+margin: 0;
+padding: 0;
+}
+
+.comments li {
+display: inline;
+margin: 0;
+padding: 0;
+}
