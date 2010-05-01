@@ -104,6 +104,39 @@ for ($peerno=0;$peerno<$maxpeers;$peerno++)
 
     echo '<div class="innerwidget">';
         
+    #echo '<div>' ;  #menu left    
+    #echo '</div>';  #end menu left
+     # menu left
+     
+$leftmen="12"; #width% menu left
+echo '<div style="float: left; width: '.$leftmen.'%;">';
+
+#$pp='http://127.0.0.1:8080';
+$pp="http://".$peer.":".$port;             # @,$appid
+echo'
+<div id="navi-left">
+
+	<h1 class="screenreader">left navigation</h1>
+	<ul>
+<li class="page_item page-item-1"><a href="'.$pp.'/IndexCreateParserErrors_p.html" title="Crawl/Parser Errors">errors</a></li><br>
+<li class="page_item page-item-2"><a href="'.$pp.'/CrawlResults.html?process=5" title="Local Crawl Results">local</a></li><br>
+<li class="page_item page-item-3"><a href="'.$pp.'/CrawlResults.html?process=3" title="DHT Transfers">dht</a></li><br>
+<li class="page_item page-item-3"><a href="'.$pp.'/CrawlResults.html?process=2" title="Search Crawl">search</a></li><br>
+<li class="page_item page-item-4"><a href="'.$pp.'/CrawlResults.html?process=4" title="Proxy Crawl Results">proxy</a></li><br>
+<li class="page_item page-item-5"><a href="'.$pp.'/CrawlResults.html?process=6" title="Global Crawl Results">global</a></li><br>
+<li class="page_item page-item-6"><a href="'.$pp.'/CrawlResults.html?process=1" title="Reverse Global Crawl Results">reverse</a></li><br>
+
+	</ul>
+  
+</div>';
+
+echo "</div>";
+
+# content right
+echo '<div style="float: right; width: '.(100-$leftmen).'%;">';
+
+
+        
     echo "<h4><a href=?action=newcrawl&peer=".$peerno.">Start new Crawl on #".$info['host'].":".$info['port']."</a></h4>";
      echo "<table cellspacing=2>";
      foreach ($items as $item)
@@ -133,6 +166,11 @@ for ($peerno=0;$peerno<$maxpeers;$peerno++)
      } 
      }
      echo "</table>";  
+
+
+    echo "</div>"; #content right
+ 
+     
      echo "</div>";  #innerwidget
    }
    else
