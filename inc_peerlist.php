@@ -76,7 +76,7 @@ $info=$search->ping();
 if ($info['host'])     #peer defined?
 {
 
-$results = $search->peerCommandDirect($peername,$command); 
+$results = $search->peerCommandDirect($peername,$command,$appid); 
 
 //now we have xml, put it in a simple array
 $resultarray=xml2array($results);  #, $get_attributes = 1, $priority = 'tag');
