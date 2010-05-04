@@ -36,7 +36,7 @@ require 'YaCyAPI4.php';
 $search = new YaCyAPI();
 
 # menu left
-$leftmen="10"; #width% menu left
+$leftmen="12"; #width% menu left
 echo '<div style="float: left; width: '.$leftmen.'%;">';
 
 echo'
@@ -172,10 +172,10 @@ if (!$timeout)
    #echo "<td>".$item['hash']."</td>";
    if ($item['direct']=="direct")
    {
-    $di="<font color=orange>S</font>";
+    $di="<font color=orange>C</font>";
    } else
    {
-    $di="<font color=green>S</font>";
+    $di="<font color=green>C</font>";
    }
 
    
@@ -201,6 +201,10 @@ if (!$timeout)
         $ti2="<font color=orange>".$ti2."</font>";
       break;      
    }
+   
+   
+   
+   
 
  $links=round(($item['links']/1000000),1)."mio";
 

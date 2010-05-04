@@ -241,7 +241,7 @@ public function getStatus() {
        
        $this->_dur0=microtime(true);                       #for measuerement
        $xml = $this->peerCommandDirect($peername,$command,$appid); #credentials...
-      $this->_dur2=microtime(true)-$this->_dur0;     #time for command
+      $this->_dur3=microtime(true)-$this->_dur0;     #time for command
     
 
  #print_r($xml);
@@ -258,6 +258,8 @@ public function getStatus() {
       else
       {
        #not impl.
+       $items="";
+       return $items; 
       }
 }
 

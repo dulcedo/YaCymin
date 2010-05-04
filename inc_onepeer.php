@@ -45,9 +45,10 @@
       echo "</a>";          
       echo "<font color=green>on</font>";
         
-      echo "</td><td>";
+      echo "</td><td width=25%>";
       $ti1=round(($search->_dur1*1000),0);
       $ti2=round(($search->_dur2*1000),0);
+      
       switch ($ti1)
       {
       case ($ti1 > 300):
@@ -68,15 +69,33 @@
       }
       
       
-     #staus now  / measurement
-     #$status=$search->getStatus();     
+      #staus now  / measurement
+      $status=$search->getStatus();   
+      if ($status)  #implemented?     
+      {
+       $ti3=round(($search->_dur3*1000),0);
+       $mem1=$status['memory']['free'];
+       $mem2=$status['memory']['total'];
+       $mem3=$status['memory']['max'];
 
-     # Array ( [ppm] => 36 [wordCacheSize] => 19192 [wordCacheMaxSize] => 100000 [loaderqueue] => Array ( [size] => 2 [max] => 50 ) [localcrawlerqueue] => Array ( [size] => 147040 ) [limitcrawlerqueue] => Array ( [size] => 0 ) [remotecrawlerqueue] => Array ( [size] => 0 ) [memory] => Array ( [free] => 882057936 [total] => 6534856704 [max] => 6632243200 ) [processors] => 4 [traffic] => Array ( [in] => 0 [proxy] => 0 [crawler] => 0 ) )
-     #print_r($status);
-     #exit;
-     
+       if ($mem3) $memp=round((($mem3-$mem1)/$mem3)*100,1);
+       
+       $traff1=$status['traffic']['in'];
+       $traff2=$status['traffic']['proxy'];
+       $traff3=$status['traffic']['crawler'];
+
+      # Array ( [ppm] => 36 [wordCacheSize] => 19192 [wordCacheMaxSize] => 100000 [loaderqueue] => Array ( [size] => 2 [max] => 50 ) [localcrawlerqueue] => Array ( [size] => 147040 ) [limitcrawlerqueue] => Array ( [size] => 0 ) [remotecrawlerqueue] => Array ( [size] => 0 ) [memory] => Array ( [free] => 882057936 [total] => 6534856704 [max] => 6632243200 ) [processors] => 4 [traffic] => Array ( [in] => 0 [proxy] => 0 [crawler] => 0 ) )
+      #print_r($status);
+      #exit;
+      }
       
       echo "<font size=1>&nbsp;(<font color=grey>ping:</font>".$ti1." <font color=grey>cmd:</font>".$ti2." ms)</font></td>"; 
+      if ($status) 
+      {
+        echo "<td align = left title='currently used memory'>".$memp."%</td>";    # - ".$traff3."MB</td>";    
+      } else {
+        echo "<td align = left></td>";   
+      }  
       echo "<td align = right>";      
       echo " ".$items['uptime']."&nbsp;&nbsp;&nbsp;";     
       echo "</td></tr></table>";

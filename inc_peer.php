@@ -198,12 +198,13 @@ echo "</a>";
        }  #http://localhost:8092/Status.html?pauseCrawlJob=&jobType=localCrawl
  
        echo "<br><img src=http://".$info['host'].":".$info['port']."/Banner.png?textcolor=000000&bgcolor=ddeeee&bordercolor=aaaaaa>";   
-       
+       if ($status)
+      {
        $qlocal= number_format($status['localcrawlerqueue']['size'], 0, ",", ".");
        $qglobal= number_format($status['limitcrawlerqueue']['size'], 0, ",", ".");
        $qremote= number_format($status['remotecrawlerqueue']['size'], 0, ",", ".");
        echo "<br>&nbsp;Crawler local: ".$qlocal." - global: ".$qglobal." - remote: ".$qremote;
-  
+      }
        
        echo "</div>"; 
  
