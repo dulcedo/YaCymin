@@ -83,6 +83,7 @@
        $traff1=$status['traffic']['in'];
        $traff2=$status['traffic']['proxy'];
        $traff3=$status['traffic']['crawler'];
+       $traff3=round($traff3/1024,1);
 
       # Array ( [ppm] => 36 [wordCacheSize] => 19192 [wordCacheMaxSize] => 100000 [loaderqueue] => Array ( [size] => 2 [max] => 50 ) [localcrawlerqueue] => Array ( [size] => 147040 ) [limitcrawlerqueue] => Array ( [size] => 0 ) [remotecrawlerqueue] => Array ( [size] => 0 ) [memory] => Array ( [free] => 882057936 [total] => 6534856704 [max] => 6632243200 ) [processors] => 4 [traffic] => Array ( [in] => 0 [proxy] => 0 [crawler] => 0 ) )
       #print_r($status);
@@ -92,7 +93,8 @@
       echo "<font size=1>&nbsp;(<font color=grey>ping:</font>".$ti1." <font color=grey>cmd:</font>".$ti2." ms)</font></td>"; 
       if ($status) 
       {
-        echo "<td align = left title='currently used memory'>".$memp."%</td>";    # - ".$traff3."MB</td>";    
+        echo "<td align = left title='currently crawled megabytes and used RA Memory'><font size=1><font color=grey>".$traff3."GB  ".$memp."%</font></font></td>";    
+        
       } else {
         echo "<td align = left></td>";   
       }  

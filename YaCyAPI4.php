@@ -37,6 +37,9 @@ class YaCyAPI {
     protected $_curlArray;
 
 
+
+
+
 //############# public API functions ismael ##########################  
 //
 public function addJob() {
@@ -134,6 +137,17 @@ public function setTransferProperties() {
  #indexDistribute=>on/off, indexDistributeWhileCrawling=>on/off, indexReceive=>on/off, indexReceiveBlockBlacklist=>on/off
 }
 
+public function stop() {
+       $peername="http://".$this->PeerURL.":".$this->PeerPort."/";
+       $command="Steering.html?shutdown=";
+       $appid=$this->PeerAppid;
+       
+       $this->_dur0=microtime(true);                       #for measuerement
+       $xml = $this->peerCommandDirect($peername,$command,$appid); 
+      $this->_dur2=microtime(true)-$this->_dur0;     #time for command
+}
+
+
 ### search specific 
 #########################################
 
@@ -180,16 +194,15 @@ public function setLr($n)
 {        
       $this->Lr= $n;
 }
-
-
-public function stop() {
-       $peername="http://".$this->PeerURL.":".$this->PeerPort."/";
-       $command="Steering.html?shutdown=";
-       $appid=$this->PeerAppid;
-       
-       $this->_dur0=microtime(true);                       #for measuerement
-       $xml = $this->peerCommandDirect($peername,$command,$appid); 
-      $this->_dur2=microtime(true)-$this->_dur0;     #time for command
+#--------------------------------------------------------------------------------
+#get results
+#search
+#see below
+public function getMeta(){
+}
+public function getTitle(){
+}
+public function getLink(){
 }
 
 
@@ -198,7 +211,53 @@ public function stop() {
 
 public function findFirstPeer($frompeer) 
 {        
-      
+   include 'peerlist_inc.php';
+   
+   $maxpeers=count($this_YaCyPeer); #local inst   
+    
+   $peerno=0;                                      
+   while ($peerno<$maxpeers)
+   {
+    $peer=$this_YaCyPeer[$peerno][0];
+    $port=$this_YaCyPeer[$peerno][1];
+    $appid=$this_YaCyPeer[$peerno][2];
+    $name=$this_YaCyPeer[$peerno][3];
+    $peername="http://".$peer.":".$port."/";
+
+    $res=$this->setProperties($peer.":".$port,$appid,$name);
+    $info=$this->ping();
+    
+    if ($info['status'])     #port online?
+    {
+    
+     #$res=$this->getStatus();
+     $command="Network.xml";
+     $res = $this->peerCommandDirect($peername,$command,$appid); 
+     if ($res)
+     {
+      $result['peer']=$peer;
+      $result['port']=$port;
+      $result['appid']=$appid;
+     
+     # echo "<br>found:".$peerno; print_r($info);
+      return $result;
+      $peerno=$maxpeers;
+     }
+     else
+     {
+   #   echo "<br>not answering:".$peerno; print_r($info);
+     }
+    # exit;
+    }
+    else
+    {
+#     echo "<br>not found:".$peerno; print_r($info);
+    # exit;
+     
+    }
+    
+    $peerno++;
+ } #endwhile
 }
 
 
@@ -304,8 +363,10 @@ public function getYconf($key) {
 # returns search in simple array
 public function search($s)
 {
-$xml=$this->getResults($s); 
-$resultarray=xml2array($xml);  #, $get_attributes = 1, $priority = 'tag'); 
+$xml=$this->getResults($s);
+
+$resultarray=$this->xml2array2($xml); 
+
 $items=$resultarray['rss']['channel']['item'];
 #print_r($xml);
 #exit;
@@ -453,7 +514,10 @@ public function peerCommandDirect($peername,$command,$credentials) #="admin:yacy
       $YaCyURL=$peername;
       $cu=$YaCyURL.$command;
 #echo "<br>CU:".$cu;
-      $to=2000;
+      #$to=2000;
+      $cntimeout=1;
+      $ctimeout=2;
+      
        
       $ti=microtime(true); 
       
@@ -462,9 +526,14 @@ public function peerCommandDirect($peername,$command,$credentials) #="admin:yacy
       curl_setopt($queryServer, CURLOPT_HEADER, 0);
       curl_setopt($queryServer, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($queryServer, CURLOPT_USERPWD,$credentials);
-      curl_setopt($queryServer, CURLOPT_CONNECTTIMEOUT_MS, $to);
-
       
+      #MS not functional!
+     # curl_setopt($queryServer, CURLOPT_CONNECTTIMEOUT_MS, $to);
+       // connection timeout seconds
+       curl_setopt($queryServer, CURLOPT_CONNECTTIMEOUT, $cntimeout);
+       // curl timeout
+       curl_setopt($queryServer, CURLOPT_TIMEOUT, $ctimeout);
+       
      $holder = curl_exec($queryServer);
      $this->_status = curl_getinfo($queryServer, CURLINFO_HTTP_CODE);     
          
@@ -486,7 +555,6 @@ public function peerCommandDirect($peername,$command,$credentials) #="admin:yacy
       
 }
 
-
 ################ helpers #########################
 
 // <root>
@@ -498,7 +566,7 @@ public function peerCommandDirect($peername,$command,$credentials) #="admin:yacy
 // funtion creates an array like 
 // array[root][child1][child1child1]
 
-function xml2array2($contents, $get_attributes = 1, $priority = 'tag')
+public function xml2array2($contents, $get_attributes = 1, $priority = 'tag')
 {
    
     if (!function_exists('xml_parser_create'))

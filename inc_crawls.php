@@ -62,12 +62,12 @@ for ($peerno=0;$peerno<$maxpeers;$peerno++)
      $status=$search->getStatus();  
      if (!$status)
      {
-     $qlocal="-";
-     $qglobal="-";
+      $qlocal="-";
+      $qglobal="-";
+     } else {
+      $qlocal= number_format($status['localcrawlerqueue']['size'], 0, ",", ".");
+      $qglobal= number_format($status['limitcrawlerqueue']['size'], 0, ",", ".");
      }
-     $qlocal= number_format($status['localcrawlerqueue']['size'], 0, ",", ".");
-     $qglobal= number_format($status['limitcrawlerqueue']['size'], 0, ",", ".");
-     
 
      $items=$search->crawlInfo();
 

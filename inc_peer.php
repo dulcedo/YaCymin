@@ -30,11 +30,22 @@
 // Include the API PHP Library
 require 'YaCyAPI4.php';
 #include 'JSON.php';
+//-----------------------------------------------------
+// 
+include 'peerlist_inc.php';
+ 
+  $peerno=$_GET['peer'];
+  $peer=$this_YaCyPeer[$peerno][0];
+  $port=$this_YaCyPeer[$peerno][1];
+  $appid=$this_YaCyPeer[$peerno][2];
+  $name=$this_YaCyPeer[$peerno][3];
 
 
 # menu left
 $leftmen="10"; #width% menu left
 echo '<div style="float: left; width: '.$leftmen.'%;">';
+
+$p="http://".$peer.":".$port;
 
 echo'
 <br>
@@ -43,17 +54,23 @@ echo'
 <div id="navi-left">
 
 	<h1 class="screenreader">left navigation</h1>
-  
+
   
 	<ul>
-<li class="page_item page-item-1"><a href="" title="">search</a></li><br>
-<li class="page_item page-item-1"><a href="#" title="">crawler</a></li><br>
-<li class="page_item page-item-1"><a href="#" title="">monitor</a></li><br>
-<li class="page_item page-item-1"><a href="#" title="">control</a></li><br>
-<li class="page_item page-item-1"><a href="#" title="">restart</a></li><br>
-<li class="page_item page-item-1"><a href="#" title="">admin</a></li><br>
-<li class="page_item page-item-1"><a href="#" title="">shutdown</a></li><br>
-<li class="page_item page-item-1"><a href="#" title="">YaCy home</a></li><br>
+<li class="page_item page-item-1"><a href="'.$p.'/index.html?display=0" title="">search</a></li><br>
+<li class="page_item page-item-1"></li><br>
+<li class="page_item page-item-2"><a href="'.$p.'/CrawlStart_p.html" title="">crawlstart</a></li><br>
+<li class="page_item page-item-3"><a href="'.$p.'/ContentIntegrationPHPBB3_p.html  " title="">import</a></li><br>
+<li class="page_item page-item-2"></li><br>
+<li class="page_item page-item-3"><a href="'.$p.'/CrawlResults.html?process=5&autoforward=" title="">monitor</a></li><br>
+<li class="page_item page-item-4"><a href="'.$p.'/IndexControlRWIs_p.html" title="">index</a></li><br>
+<li class="page_item page-item-4"><a href="'.$p.'/AccessTracker_p.html" title="">access</a></li><br>
+<li class="page_item page-item-4"></li><br>
+<li class="page_item page-item-5"><a href="'.$p.'/Steering.html?restart=" title="">restart</a></li><br>
+<li class="page_item page-item-6"><a href="'.$p.'/ConfigUpdate_p.html" title="">update</a></li><br>
+<li class="page_item page-item-7"><a href="'.$p.'/Steering.html?shutdown=" title="">shutdown</a></li><br>
+<li class="page_item page-item-1"></li><br>
+<li class="page_item page-item-8"><a href="http://www.yacy.net/" title="">YaCy home</a></li><br>
 
 	</ul>
   
@@ -78,15 +95,6 @@ $search = new YaCyAPI();
 // show overview
 echo "<h3><font color=grey>&nbsp;".date('d-m H:i',time())."</font></h3>";
   
-//-----------------------------------------------------
-// 
-include 'peerlist_inc.php';
- 
-  $peerno=$_GET['peer'];
-  $peer=$this_YaCyPeer[$peerno][0];
-  $port=$this_YaCyPeer[$peerno][1];
-  $appid=$this_YaCyPeer[$peerno][2];
-  $name=$this_YaCyPeer[$peerno][3];
 
    $t="Showing peer-name / address and time for a ping / time for executing commands / peer uptime. Click for more infos.";
    #echo '<div class="blogtoy">';
@@ -95,6 +103,12 @@ include 'peerlist_inc.php';
    #-------------------------------------------------------------------------------
   $res=$search->setProperties($peer.":".$port,$appid,$name);
   $info=$search->ping();
+  
+  
+  
+  
+  
+  
   
 
   if ($info['host'])     #peer defined?
@@ -229,3 +243,4 @@ echo "</a>";
 } #endif peer defined
 
 echo "</div>"; #content right
+
